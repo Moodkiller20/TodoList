@@ -17,7 +17,7 @@
 
 
         {% for todo in todos %}
-            <div class="row justify-content-md-center py-3 my-3 shadow-lg">
+            <div class="row  shadow  rounded  pt-3 mx-1 py-3 my-3 shadow-lg">
                 <div class="col-md-8 mx-auto ">
                     <p class="fs-4 fw-bold "> {{ todo.task_name }}</p>
                     <small class="d-block"> Created: {{ todo.created_at }}</small>
@@ -26,12 +26,12 @@
                     {% endif %}
                 </div>
 
-                <div class="col-md-4 ">
+                <div class="col-md-4 text-end">
                     <a href="{% url 'update_task' todo.id %}" class="btn btn-outline-primary btn-inline"><i class="fa-regular fa-pen-to-square todo-update-btn" ></i></a>
 
                     <form class="d-inline" action="{% url 'delete_task' todo.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-outline-danger d-inline" type="submit"><i class="fa-regular fa-rectangle-xmark todo-update-btn"></i></i> </button>
+                        <button class="btn btn-outline-danger d-inline " type="submit"><i class="fa-regular fa-rectangle-xmark todo-update-btn"></i></i> </button>
                     </form>
 
                 </div>
@@ -54,7 +54,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="col-md-4 ">
+                    <div class="col-md-4 col-12 text-md-end text-start mb-3">
                         <a href="{% url 'update_task' macth.id %}" class="btn btn-outline-primary btn-inline"><i class="fa-regular fa-pen-to-square todo-update-btn" ></i></a>
 
                         <form class="d-inline" action="{% url 'delete_task' macth.id %}" method="POST">
@@ -65,7 +65,12 @@
                     </div>
                 </div>
             {% empty %}
-                <p class="fs-5 fw-bold">No items found with your search term, or there is no todo added yet</p>
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <p class="fs-5 fw-bold">No items found with your search term, or there is no todo added yet</p>
+                    </div>
+                </div>
+
             {% endfor %}
         {% endif %}
 

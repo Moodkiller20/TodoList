@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "common/base.html" %}
 
-</body>
-</html>
+
+
+
+
+{% block body %}
+
+    <div class=" container my-4">
+        <div class="row justify-content-md-center ">
+            <div class="col-8 mx-auto">
+                <div class="card ">
+                    <div class="card-header text-start">
+                       Update Task
+                    </div>
+                    <div class="card-body ">
+
+                        <form action="" method="post">
+                            <div class="input-group mb-3">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                        </div>
+                            <button class="btn btn-primary" type="submit"><i class="fa-regular fa-pen-to-square"></i> Add</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <a href="{% url 'todo' %}" class="btn btn-warning fw-bold my-3"><i class="fa-solid fa-arrow-left"></i></i> Go back</a>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+{% endblock %}
+

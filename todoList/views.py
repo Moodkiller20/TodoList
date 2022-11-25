@@ -2,21 +2,25 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.http import HttpResponseRedirect
+
+
 # Create your views here.
 def todoView(request):
-    todos =Todo.objects.all()
-    context ={
-        'todos':todos
+    todos = Todo.objects.all()
+    context = {
+        'todos': todos
     }
-    return render(request,'todoList/index.html',context)
+    return render(request, 'todoList/index.html', context)
 
-def updateTodo(request,id):
+
+def updateTodo(request, id):
     todos = Todo.objects.get(id=id)
     form = TaskForm(request.POST or None, instance=todos)
     if form.is_valid():
         form.save()
         return redirect('todo')
-    return render(request, 'todoList/update.html',{'form':form})
+    return render(request, 'todoList/update.html', {'form': form})
+
 
 def add(request):
     if request.method == 'POST':
@@ -26,20 +30,21 @@ def add(request):
             return redirect('todo')
     else:
         form = TaskForm()
-    return render(request,'todoList/add.html',{'form':form})
+    return render(request, 'todoList/add.html', {'form': form})
 
-def delete(request,id):
+
+def delete(request, id):
     todos = Todo.objects.all()
     todo = Todo.objects.get(id=id)
     if request.method == 'POST':
         todo.delete()
         return redirect('todo')
 
-    return render(request,'todoList/index.html',{'todos':todos})
+    return render(request, 'todoList/index.html', {'todos': todos})
 
 
 def search(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         search_term = request.POST['search-term'] or ''
         todos = Todo.objects.filter(task_name__contains=search_term)
 
@@ -49,4 +54,5 @@ def search(request):
         return render(request, 'todoList/index.html', context)
     else:
 
-        return render(request, 'todoList/index.html', {'message':"No items found with your search term, or there is no todo added yet"})
+        return render(request, 'todoList/index.html',
+                      {'message': "No items found with your search term, or there is no todo added yet"})

@@ -5,7 +5,7 @@
         <div class="row justify-content-md-center text-center">
             <h1 class=" display-4"> <a class="header" href="{% url  'todo' %}">TODO-LIST</a></h1>
             <div class="col-md-12">
-                <form method="POST" action="{% url 'search_task' %}">
+                <form method="GET" action="{% url 'search_task' %}">
                     <div class="input-group mb-3">
                         {% csrf_token %}
                         <input type="text" class="form-control" name="search-term" placeholder="Search tasks" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -26,56 +26,26 @@
                     {% endif %}
                 </div>
 
-                <div class="col-md-4 text-end">
+                <div class="col-md-4 text-start col-12 text-md-end">
                     <a href="{% url 'update_task' todo.id %}" class="btn btn-outline-primary btn-inline"><i class="fa-regular fa-pen-to-square todo-update-btn" ></i></a>
 
                     <form class="d-inline" action="{% url 'delete_task' todo.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-outline-danger d-inline " type="submit"><i class="fa-regular fa-rectangle-xmark todo-update-btn"></i></i> </button>
+                        <button class="btn btn-outline-danger d-inline " type="submit"><i class="fa-regular fa-rectangle-xmark todo-update-btn"></i></button>
                     </form>
 
                 </div>
             </div>
         {% empty %}
-            {% if search_result %}
+            {% if todos %}
             {% else %}
                 <p class="fs-5 fw-bold">No items found with your search term, or there is no todo added yet</p>
             {% endif %}
         {% endfor %}
 
-        {% if search_result %}
-            {% for macth in search_result %}
-                <div class="row justify-content-md-center py-3 my-3 shadow-lg">
-                    <div class="col-md-8 mx-auto ">
-                        <p class="fs-4 fw-bold "> {{ macth.task_name }}</p>
-                        <small class="d-block"> Created: {{ macth.created_at }}</small>
-                        {% if macth.created_at < macth.updated_at %}
-                            <small>Edited: {{ macth.created_at }}</small>
-                        {% endif %}
-                    </div>
-
-                    <div class="col-md-4 col-12 text-md-end text-start mb-3">
-                        <a href="{% url 'update_task' macth.id %}" class="btn btn-outline-primary btn-inline"><i class="fa-regular fa-pen-to-square todo-update-btn" ></i></a>
-
-                        <form class="d-inline" action="{% url 'delete_task' macth.id %}" method="POST">
-                            {% csrf_token %}
-                            <button class="btn btn-outline-danger d-inline" type="submit"><i class="fa-regular fa-rectangle-xmark todo-update-btn"></i></i> </button>
-                        </form>
-
-                    </div>
-                </div>
-            {% empty %}
-                <div class="row">
-                    <div class="col-12 mb-3">
-                        <p class="fs-5 fw-bold">No items found with your search term, or there is no todo added yet</p>
-                    </div>
-                </div>
-
-            {% endfor %}
-        {% endif %}
 
         <div class="row  my-3">
-            <div class="col-3">
+            <div class="col-12">
                 <a href="{% url 'addTask' %}" class="btn btn-success"><i class="fa-sharp fa-solid fa-plus"></i>  Add a new task</a>
             </div>
         </div>

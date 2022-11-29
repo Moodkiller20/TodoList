@@ -44,15 +44,11 @@ def delete(request, id):
 
 
 def search(request):
-    if request.method == 'POST':
-        search_term = request.POST['search-term'] or ''
-        todos = Todo.objects.filter(task_name__contains=search_term)
 
-        context = {
-            'search_result': todos
-        }
-        return render(request, 'todoList/index.html', context)
-    else:
+    search_term = request.GET.get('search-term') or ''
+    todos = Todo.objects.filter(task_name__contains=search_term)
 
-        return render(request, 'todoList/index.html',
-                      {'message': "No items found with your search term, or there is no todo added yet"})
+    context = {
+        'todos': todos
+    }
+    return render(request, 'todoList/index.html', context)
